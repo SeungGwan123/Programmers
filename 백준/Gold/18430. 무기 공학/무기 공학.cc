@@ -6,9 +6,9 @@ vector<int> boo[5];
 int n;int m;
 int final_result=0;
 int dir[4][4]={{0,-1,1,0},{0,-1,-1,0},{-1,0,0,1},{0,1,1,0}};
-void bfs(int a,int b,int result,int check){
-    if(result+check<final_result)return;
-    for(int i=a;i<n;i++){
+void bfs(int a,int b,int result){
+    for(int i=0;i<n;i++){
+        if(i<a)continue;
         for(int j=0;j<m;j++){
             if((i==a&&j<b)||visited[i][j])continue;
             for(int d=0;d<4;d++){
@@ -22,19 +22,12 @@ void bfs(int a,int b,int result,int check){
                 visited[i][j]=true;
                 visited[r_x][r_y]=true;
                 visited[l_x][l_y]=true;
-                check-=((boo[i][j]+boo[r_x][r_y]+boo[l_x][l_y])*2);
-                if(d<2){
-                    bfs(i, j+1, result,check);
-                }else{
-                    bfs(i, j+2, result,check);
-                }
+                bfs(i, j, result);
                 result-=(boo[i][j]*2+boo[r_x][r_y]+boo[l_x][l_y]);
                 visited[i][j]=false;
                 visited[r_x][r_y]=false;
                 visited[l_x][l_y]=false;
-                check+=((boo[i][j]+boo[r_x][r_y]+boo[l_x][l_y])*2);
             }
-            //check -= (boo[i][j]);
         }
     }
     final_result = max(final_result, result);
@@ -42,16 +35,14 @@ void bfs(int a,int b,int result,int check){
 int main() {
 
     cin>>n>>m;
-    int check=0;
     for(int i=0;i<n;i++){
         for(int j=0;j<m;j++){
             int temp;
             cin>>temp;
             boo[i].push_back(temp);
-            check+=temp;
         }
     }
     fill_n(&visited[0][0], 5 * 5, false);
-    bfs(0, 0,0,check*2);
+    bfs(0, 0,0);
     cout<<final_result;
 }
