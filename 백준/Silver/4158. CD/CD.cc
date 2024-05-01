@@ -12,18 +12,18 @@ int main() {
         int m;
         cin >> n >> m;
         if(n==0&&m==0)break;
-        vector<int> sg;
-        vector<int> sy;
+        vector<int> sg(n);
+        vector<int> sy(m);
         int result = 0;
         for (int i = 0; i < n; i++) {
             int temp;
             cin >> temp;
-            sg.push_back(temp);
+            sg[i]=temp;
         }
         for (int i = 0; i < m; i++) {
             int temp;
             cin >> temp;
-            sy.push_back(temp);
+            sy[i]=temp;
         }
         int g=0;
         int y=0;
