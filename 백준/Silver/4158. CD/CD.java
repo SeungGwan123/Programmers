@@ -11,12 +11,23 @@ public class Main {
             int m = Integer.parseInt(stk.nextToken());
             if(n==0&&m==0) break;
             int result = 0;
-            Set<Integer> sg = new HashSet(n);
+            List<Integer> sg = new ArrayList<>();
+            List<Integer> sy = new ArrayList<>();
             for (int i = 0; i < n; i++) {
                 sg.add(Integer.parseInt(br.readLine()));
             }
             for (int i = 0; i < m; i++) {
-                if (sg.contains(Integer.parseInt(br.readLine()))) {
+                sy.add(Integer.parseInt(br.readLine()));
+            }
+            int g=0;
+            int y=0;
+            while (g<sg.size()&&y<sy.size()) {
+                if (sg.get(g) > sy.get(y)) y++;
+                else if (sg.get(g) < sy.get(y)) {
+                    g++;
+                } else {
+                    y++;
+                    g++;
                     result++;
                 }
             }
