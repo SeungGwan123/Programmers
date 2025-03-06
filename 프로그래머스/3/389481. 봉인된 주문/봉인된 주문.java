@@ -25,13 +25,11 @@ class Solution {
         }
         int j = 0;
         while(n>0){
+            n--;
             long num = n%26;
             n = n/26;
-            if(num==0) {
-                answer = 'z' + answer;
-                n--;
-            }
-            else answer = (char)(num+96) + answer;
+
+            answer = (char)(num+97) + answer;
         }
         return answer;
     }
