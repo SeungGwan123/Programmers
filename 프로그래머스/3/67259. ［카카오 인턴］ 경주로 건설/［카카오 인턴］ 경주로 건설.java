@@ -19,12 +19,12 @@ class Solution {
             if(board[dx][dy]==1) continue;
             //if(visited[dx][dy]>result) continue;
             if(num!=d) {
-                if(visited[dx][dy]<visited[x][y]) continue;
+                if(visited[dx][dy]<visited[x][y]+100) continue;
                 visited[dx][dy] = visited[x][y]+600;
                 dfs(dx,dy,d,count+600);
             }
             else{
-                if(visited[dx][dy]<visited[x][y]) continue;
+                if(visited[dx][dy]<visited[x][y]-400) continue;
                 visited[dx][dy] = visited[x][y]+100;
                 dfs(dx,dy,d,count+100);  
             } 
