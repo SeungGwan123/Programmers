@@ -1,37 +1,31 @@
 function solution(genres, plays) {
-    var answer = [];
-    let total = [];
-    let num = new Map();
-    let total_gen = new Map();
-    for(let i=0;i<genres.length;i++){
-        let gen = genres[i];
-        let play = plays[i];
-        if(!num.has(gen)){
-            num.set(gen,total.length);
-            total.push([play,gen]);
-            total_gen.set(gen,[[play,i]]);
+    const map = new Map();
+    const arr = []
+    for(const [index,genre] of genres.entries()){
+        arr.push([genre,plays[index],index])
+        if(map.has(genre)){
+            map.set(genre,map.get(genre)+plays[index])
         }else{
-            total[num.get(gen)][0]+=play;
-            let temp = total_gen.get(gen);
-            temp.push([play,i]);
-            total_gen.set(gen,temp);
+            map.set(genre,plays[index])
         }
     }
-    total.sort((a,b)=> b[0]-a[0]);
-    for(let i=0;i<total.length;i++){
-        let now = total[i][1];
-        console.log(now);
-        let music = total_gen.get(now);
-        music.sort((a, b) => {
-            if (b[0] === a[0]) {
-                return a[1] - b[1];
-            } else {
-                return b[0] - a[0];
-            }
-        });
-        for(let j=0;j<music.length&&j<2;j++){
-            answer.push(music[j][1]);
+    arr.sort((a,b)=>{
+        if(map.get(a[0])===map.get(b[0])){
+            if(a[1]===b[1]) return a[2] - b[2]
+            else return b[1] - a[1]
+        }else return map.get(b[0]) - map.get(a[0])
+    })
+    const genre_count = new Map();
+    const answer = arr.map((a)=>{
+        if(genre_count.has(a[0])){
+            const g_count = genre_count.get(a[0])
+            if(g_count>1) return undefined
+            genre_count.set(a[0],g_count+1)
+            return a[2]
+        }else{
+            genre_count.set(a[0],1)
+            return a[2]
         }
-    }
-    return answer;
+    }).filter(a=>a!==undefined)
+    return answer
 }
